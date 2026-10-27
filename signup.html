@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create account | Kayesthetic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="auth-page">
+  <main class="auth-layout">
+    <section class="auth-visual">
+      <div class="auth-overlay">
+        <a class="brand brand-light" href="index.html">
+          <span class="brand-mark"><span class="brand-mark-lens"></span></span>
+          <span class="brand-copy"><strong>KAYESTHETIC</strong><small>PHOTOGRAPHY BOOKING</small></span>
+        </a>
+        <div class="auth-quote">
+          <p class="eyebrow gold-text">YOUR STORY, YOUR SESSION</p>
+          <h1>Make room for<br>memories.</h1>
+        </div>
+      </div>
+    </section>
+    <section class="auth-form-panel">
+      <div class="auth-form">
+        <a class="back-link" href="index.html">← Back to home</a>
+        <p class="eyebrow gold-text">GET STARTED</p>
+        <h2>Create account</h2>
+        <p class="form-intro">Create a client account so you can manage your photography sessions in one place.</p>
+        <form id="signupForm">
+          <div class="form-two">
+            <div><label for="firstName">First name</label><input id="firstName" type="text" placeholder="First name" required></div>
+            <div><label for="lastName">Last name</label><input id="lastName" type="text" placeholder="Last name" required></div>
+          </div>
+          <label for="signupEmail">Email address</label>
+          <input id="signupEmail" type="email" placeholder="you@example.com" required>
+          <label for="phone">Phone number</label>
+          <input id="phone" type="tel" placeholder="+63 9XX XXX XXXX" required>
+          <label for="signupPassword">Password</label>
+          <input id="signupPassword" type="password" placeholder="Create a password" minlength="8" required>
+          <label for="confirmPassword">Confirm password</label>
+          <input id="confirmPassword" type="password" placeholder="Repeat your password" required>
+          <label class="checkbox-label consent">
+            <input id="consent" type="checkbox" required>
+            <span>I agree to the terms and consent to the processing of my booking information.</span>
+          </label>
+          <button class="gold-btn full-width" type="submit">Create account <span>→</span></button>
+        </form>
+        <p class="auth-switch">Already have an account? <a href="login.html">Sign in</a></p>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+  <script src="signup.js"></script>
+</body>
+</html>

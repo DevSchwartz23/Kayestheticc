@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Audit Logs | Kayesthetic</title>
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles-dashboard.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-top">
+
+        <a class="brand" href="index.html">
+
+          <span class="logo"></span>
+
+          <span>
+            <strong>KAYESTHETIC</strong>
+            <small>ADMIN WORKSPACE</small>
+          </span>
+
+        </a>
+
+      </div>
+
+      <!-- NAVIGATION -->
+      <nav class="nav">
+
+        <div class="nav-section">Management</div>
+
+        <a href="admin-dashboard.html">
+          <span class="nav-icon">⌂</span>
+          Dashboard
+        </a>
+
+        <a href="admin-calendar.html">
+          <span class="nav-icon">▦</span>
+          Booking Calendar
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">◫</span>
+          Bookings
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">♙</span>
+          Clients
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">▣</span>
+          Sessions
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">₱</span>
+          Payments
+        </a>
+
+        <div class="nav-section">Security</div>
+
+        <a class="active" href="audit-logs.html">
+          <span class="nav-icon">◌</span>
+          Audit Logs
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">⚙</span>
+          Settings
+        </a>
+
+        <a href="index.html">
+          <span class="nav-icon">↪</span>
+          Sign out
+        </a>
+
+      </nav>
+
+      <!-- ADMIN PROFILE -->
+      <div class="sidebar-bottom">
+
+        <div class="profile-mini">
+
+          <span class="avatar">AD</span>
+
+          <div>
+            <strong>Admin</strong>
+            <small>Photographer account</small>
+          </div>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+      <!-- TOP BAR -->
+      <header class="topbar">
+
+        <h1>Audit Logs</h1>
+
+        <div class="topbar-right">
+
+          <span class="status confirmed">
+            Logging active
+          </span>
+
+          <span class="avatar">AD</span>
+
+        </div>
+
+      </header>
+
+      <main>
+
+        <div class="page-wrap">
+
+          <!-- PAGE HEADING -->
+          <div class="hero-row">
+
+            <div>
+
+              <p class="eyebrow">ACCOUNTABILITY</p>
+
+              <h2>Activity history.</h2>
+
+              <p>
+                Every important booking, payment, schedule,
+                and access change is traceable.
+              </p>
+
+            </div>
+
+          </div>
+
+          <!-- AUDIT LOGS TABLE -->
+          <div class="card panel">
+
+            <!-- SEARCH AND FILTERS -->
+            <div class="search-row">
+
+              <input
+                class="search"
+                placeholder="Search user, action, booking ID..."
+              >
+
+              <select class="filter">
+                <option>All actions</option>
+                <option>Bookings</option>
+                <option>Payments</option>
+                <option>Authentication</option>
+              </select>
+
+              <select class="filter">
+                <option>All users</option>
+                <option>Admin</option>
+                <option>Clients</option>
+              </select>
+
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-wrap">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Record</th>
+                    <th>Result</th>
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  <!-- LOG 1 -->
+                  <tr>
+                    <td>2026-09-12 20:32</td>
+                    <td>Admin</td>
+                    <td>Booking confirmed</td>
+                    <td>PBS-1024 · Maria Santos</td>
+
+                    <td>
+                      <span class="status confirmed">
+                        Success
+                      </span>
+                    </td>
+                  </tr>
+
+                  <!-- LOG 2 -->
+                  <tr>
+                    <td>2026-09-12 19:54</td>
+                    <td>Admin</td>
+                    <td>Payment recorded</td>
+                    <td>PBS-1024 · ₱1,000</td>
+
+                    <td>
+                      <span class="status confirmed">
+                        Success
+                      </span>
+                    </td>
+                  </tr>
+
+                  <!-- LOG 3 -->
+                  <tr>
+                    <td>2026-09-12 18:21</td>
+                    <td>Admin</td>
+                    <td>Booking rescheduled</td>
+                    <td>PBS-1018 · John Cruz</td>
+
+                    <td>
+                      <span class="status confirmed">
+                        Success
+                      </span>
+                    </td>
+                  </tr>
+
+                  <!-- LOG 4 -->
+                  <tr>
+                    <td>2026-09-12 17:42</td>
+                    <td>Sample Client</td>
+                    <td>Questionnaire updated</td>
+                    <td>PBS-1022</td>
+
+                    <td>
+                      <span class="status confirmed">
+                        Success
+                      </span>
+                    </td>
+                  </tr>
+
+                  <!-- LOG 5 -->
+                  <tr>
+                    <td>2026-09-12 16:10</td>
+                    <td>Admin</td>
+                    <td>Login</td>
+                    <td>Admin account</td>
+
+                    <td>
+                      <span class="status confirmed">
+                        Success
+                      </span>
+                    </td>
+                  </tr>
+
+                  <!-- LOG 6 -->
+                  <tr>
+                    <td>2026-09-12 15:02</td>
+                    <td>Unknown</td>
+                    <td>Login attempt</td>
+                    <td>Admin account</td>
+
+                    <td>
+                      <span class="status cancelled">
+                        Failed
+                      </span>
+                    </td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

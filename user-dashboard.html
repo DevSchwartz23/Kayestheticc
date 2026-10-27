@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard | Kayesthetic</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles-dashboard.css">
+
+  <!-- Dashboard Authentication -->
+  <script src="dashboard-auth.js"></script>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <a class="brand" href="index.html">
+          <span class="logo"></span>
+          <span>
+            <strong>KAYESTHETIC</strong>
+            <small>CLIENT PORTAL</small>
+          </span>
+        </a>
+      </div>
+
+      <nav class="nav">
+        <div class="nav-section">Workspace</div>
+
+        <a class="active" href="user-dashboard.html">
+          <span class="nav-icon">⌂</span>Dashboard
+        </a>
+
+        <a href="user-calendar.html">
+          <span class="nav-icon">▦</span>My Calendar
+        </a>
+
+        <a href="booking.html">
+          <span class="nav-icon">＋</span>Book a Session
+        </a>
+
+        <a href="my-bookings.html">
+          <span class="nav-icon">◫</span>My Bookings
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">✎</span>Questionnaire
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">₱</span>Payments
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">♡</span>Messages
+        </a>
+
+        <div class="nav-section">Account</div>
+
+        <a href="#">
+          <span class="nav-icon">◉</span>Profile & Settings
+        </a>
+
+        <a href="login.html" id="logoutButton">
+          <span class="nav-icon">↪</span>Sign out
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="profile-mini">
+          <span class="avatar">...</span>
+          <div>
+            <strong id="profileName">Client</strong>
+            <small>Client account</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+      <header class="topbar">
+        <h1>Client Dashboard</h1>
+
+        <div class="topbar-right">
+          <button class="icon-btn">⌕</button>
+          <button class="icon-btn">
+            ♧<span class="dot"></span>
+          </button>
+          <span class="avatar">--</span>
+        </div>
+      </header>
+
+      <main>
+        <div class="page-wrap">
+
+          <!-- WELCOME -->
+          <div class="hero-row">
+            <div>
+              <p class="eyebrow">YOUR STORY, YOUR SESSION</p>
+              <h2 id="welcomemessage">Welcome!</h2>
+              <p>Everything for your next photography session, in one calm place.</p>
+            </div>
+
+            <a class="gold-btn" href="booking.html">
+              Book a session <span>→</span>
+            </a>
+          </div>
+
+          <!-- LIVE BOOKING SUMMARY -->
+          <div class="cards kpis">
+            <div class="card kpi">
+              <div class="kpi-top">Total bookings <span class="kpi-icon">▦</span></div>
+              <div class="kpi-number" id="totalBookings">—</div>
+              <div class="kpi-note">Your booking requests</div>
+            </div>
+            <div class="card kpi">
+              <div class="kpi-top">Upcoming sessions <span class="kpi-icon">▦</span></div>
+              <div class="kpi-number" id="upcomingBookings">—</div>
+              <div class="kpi-note">Pending or confirmed future sessions</div>
+            </div>
+            <div class="card kpi">
+              <div class="kpi-top">Pending requests <span class="kpi-icon">◷</span></div>
+              <div class="kpi-number" id="pendingBookings">—</div>
+              <div class="kpi-note">Waiting for confirmation</div>
+            </div>
+            <div class="card kpi">
+              <div class="kpi-top">Completed sessions <span class="kpi-icon">✓</span></div>
+              <div class="kpi-number" id="completedBookings">—</div>
+              <div class="kpi-note">Finished photography sessions</div>
+            </div>
+          </div>
+
+          <!-- REAL BOOKINGS -->
+          <section class="card panel" id="my-bookings" style="margin-top:18px">
+            <div class="panel-head">
+              <h3>My bookings</h3>
+              <a href="booking.html">Book another session</a>
+            </div>
+            <p id="bookingsMessage">Loading bookings...</p>
+            <div id="bookingsList"></div>
+          </section>
+
+          <section class="card panel" style="margin-top:18px">
+            <div class="panel-head"><h3>Quick actions</h3></div>
+            <div class="quick-grid">
+              <a class="quick" href="booking.html"><span>＋</span>Book another session</a>
+              <a class="quick" href="user-calendar.html"><span>▦</span>Open my calendar</a>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+  <script src="dashboard-user.js"></script>
+  <script src="dashboard-bookings.js"></script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Manage Bookings | Kayesthetic</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles-dashboard.css">
+
+  <style>
+    .booking-card {
+      padding: 20px;
+      border: 1px solid #e9e4dc;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .booking-card h3 {
+      margin: 0 0 10px;
+      font-family: "Playfair Display", serif;
+    }
+
+    .booking-details {
+      display: grid;
+      gap: 8px;
+      margin: 14px 0;
+      font-size: 13px;
+    }
+
+    .booking-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .booking-actions button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .booking-status {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+
+    .booking-status.pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .booking-status.confirmed {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .booking-status.completed {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .booking-status.cancelled {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .booking-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-top">
+        <a class="brand" href="index.html">
+          <span class="logo"></span>
+          <span>
+            <strong>KAYESTHETIC</strong>
+            <small>ADMIN WORKSPACE</small>
+          </span>
+        </a>
+      </div>
+
+      <nav class="nav">
+
+        <div class="nav-section">Management</div>
+
+        <a href="admin-dashboard.html">
+          <span class="nav-icon">⌂</span>
+          Dashboard
+        </a>
+
+        <a href="admin-calendar.html">
+          <span class="nav-icon">▦</span>
+          Booking Calendar
+        </a>
+
+        <a class="active" href="admin-bookings.html">
+          <span class="nav-icon">◫</span>
+          Bookings
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">♙</span>
+          Clients
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">▣</span>
+          Sessions
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">₱</span>
+          Payments
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">✉</span>
+          Messages
+        </a>
+
+        <div class="nav-section">Security</div>
+
+        <a href="#">
+          <span class="nav-icon">⌁</span>
+          Users &amp; Roles
+        </a>
+
+        <a href="audit-logs.html">
+          <span class="nav-icon">◌</span>
+          Audit Logs
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">⚙</span>
+          Settings
+        </a>
+
+        <a href="login.html" id="logoutButton">
+          <span class="nav-icon">↪</span>
+          Sign out
+        </a>
+
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="profile-mini">
+          <span class="avatar">AD</span>
+          <div>
+            <strong id="adminName">Admin</strong>
+            <small>Administrator account</small>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+      <header class="topbar">
+        <h1>Manage Bookings</h1>
+        <div class="topbar-right">
+          <span class="avatar">AD</span>
+        </div>
+      </header>
+
+      <main>
+        <div class="page-wrap">
+
+          <div class="hero-row">
+            <div>
+              <p class="eyebrow">BOOKING MANAGEMENT</p>
+              <h2>Customer bookings.</h2>
+              <p>
+                Review requests, approve sessions,
+                and manage booking statuses.
+              </p>
+            </div>
+          </div>
+
+          <!-- STATISTICS -->
+          <div class="cards kpis">
+
+            <div class="card kpi">
+              <div class="kpi-top">Total bookings</div>
+              <div class="kpi-number" id="totalBookings">0</div>
+              <div class="kpi-note">All customer requests</div>
+            </div>
+
+            <div class="card kpi">
+              <div class="kpi-top">Pending</div>
+              <div class="kpi-number" id="pendingBookings">0</div>
+              <div class="kpi-note">Needs approval</div>
+            </div>
+
+            <div class="card kpi">
+              <div class="kpi-top">Confirmed</div>
+              <div class="kpi-number" id="confirmedBookings">0</div>
+              <div class="kpi-note">Approved sessions</div>
+            </div>
+
+            <div class="card kpi">
+              <div class="kpi-top">Completed</div>
+              <div class="kpi-number" id="completedBookings">0</div>
+              <div class="kpi-note">Finished sessions</div>
+            </div>
+
+          </div>
+
+          <!-- BOOKINGS -->
+          <section class="card panel" style="margin-top:18px">
+
+            <div class="panel-head">
+              <h3>All bookings</h3>
+            </div>
+
+            <div class="booking-filters">
+              <select class="filter" id="statusFilter">
+                <option value="all">All bookings</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="rescheduled">Rescheduled</option>
+              </select>
+
+              <input
+                class="search"
+                id="bookingSearch"
+                type="search"
+                placeholder="Search customer or service..."
+                aria-label="Search bookings"
+              >
+            </div>
+
+            <p id="bookingsMessage">Loading bookings...</p>
+
+            <div id="bookingsList"></div>
+
+          </section>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="admin-bookings.js"></script>
+</body>
+</html>

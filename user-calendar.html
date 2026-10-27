@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Calendar | Kayesthetic</title>
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="styles-dashboard.css">
+
+  <!-- AUTHENTICATION -->
+  <script src="dashboard-auth.js"></script>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-top">
+        <a class="brand" href="index.html">
+          <span class="logo"></span>
+
+          <span>
+            <strong>KAYESTHETIC</strong>
+            <small>CLIENT PORTAL</small>
+          </span>
+        </a>
+      </div>
+
+      <!-- NAVIGATION -->
+      <nav class="nav">
+
+        <div class="nav-section">Workspace</div>
+
+        <a href="user-dashboard.html">
+          <span class="nav-icon">⌂</span>
+          Dashboard
+        </a>
+
+        <a class="active" href="user-calendar.html">
+          <span class="nav-icon">▦</span>
+          My Calendar
+        </a>
+
+        <a href="booking.html">
+          <span class="nav-icon">＋</span>
+          Book a Session
+        </a>
+
+        <a href="my-bookings.html">
+          <span class="nav-icon">◫</span>
+          My Bookings
+        </a>
+
+        <div class="nav-section">Account</div>
+
+        <a href="login.html" id="logoutButton">
+          <span class="nav-icon">↪</span>
+          Sign out
+        </a>
+
+      </nav>
+
+      <!-- USER PROFILE -->
+      <div class="sidebar-bottom">
+        <div class="profile-mini">
+
+          <span class="avatar">--</span>
+
+          <div>
+            <strong class="loggedInName">Loading...</strong>
+            <small>Client account</small>
+          </div>
+
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+      <!-- TOP BAR -->
+      <header class="topbar">
+
+        <h1>My Calendar</h1>
+
+        <div class="topbar-right">
+
+          <button class="icon-btn" type="button">
+            ♧
+            <span class="dot"></span>
+          </button>
+
+          <span class="avatar">--</span>
+
+        </div>
+
+      </header>
+
+      <main>
+
+        <div class="page-wrap">
+
+          <!-- PAGE HEADING -->
+          <div class="hero-row">
+
+            <div>
+              <p class="eyebrow">YOUR SCHEDULE</p>
+
+              <h2 id="monthHeading">My Calendar</h2>
+
+              <p>
+                View your photography bookings and
+                upcoming sessions.
+              </p>
+            </div>
+
+            <a class="gold-btn" href="booking.html">
+              ＋ Book a session
+            </a>
+
+          </div>
+
+          <!-- CALENDAR -->
+          <div class="card panel">
+
+            <div class="calendar-toolbar">
+
+              <div class="calendar-title" id="calendarTitle">
+                Calendar
+              </div>
+
+              <div class="calendar-actions">
+
+                <button
+                  class="outline-btn"
+                  type="button"
+                  id="prevMonth"
+                >
+                  ‹
+                </button>
+
+                <button
+                  class="outline-btn"
+                  type="button"
+                  id="todayButton"
+                >
+                  Today
+                </button>
+
+                <button
+                  class="outline-btn"
+                  type="button"
+                  id="nextMonth"
+                >
+                  ›
+                </button>
+
+              </div>
+
+            </div>
+
+            <!-- CALENDAR DAYS -->
+            <div class="cal-grid" id="calendarGrid"></div>
+
+            <!-- CALENDAR LEGEND -->
+            <div
+              style="
+                display:flex;
+                gap:18px;
+                flex-wrap:wrap;
+                margin-top:18px;
+                font-size:12px;
+                color:var(--muted);
+              "
+            >
+              <span>🟡 Pending</span>
+              <span>🟢 Confirmed</span>
+              <span>⚪ Completed / Cancelled</span>
+            </div>
+
+            <!-- BOOKING MESSAGE -->
+            <p
+              id="calendarMessage"
+              style="
+                margin-top:12px;
+                font-size:12px;
+                color:var(--muted);
+              "
+            >
+              Loading your bookings...
+            </p>
+
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- USER PROFILE -->
+  <script src="user-profile.js"></script>
+
+  <!-- CALENDAR SCRIPT -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+
+      const calendarGrid = document.getElementById("calendarGrid");
+      const calendarTitle = document.getElementById("calendarTitle");
+      const monthHeading = document.getElementById("monthHeading");
+      const calendarMessage = document.getElementById("calendarMessage");
+
+      const token = sessionStorage.getItem("token");
+
+      let currentDate = new Date();
+      let bookings = [];
+
+      const dayNames = [
+        "Mon", "Tue", "Wed", "Thu",
+        "Fri", "Sat", "Sun"
+      ];
+
+      // FORMAT TIME
+      function formatTime(time) {
+        if (!time) return "Time not set";
+
+        const match = /^(\d{1,2}):(\d{2})$/.exec(time);
+
+        if (!match) return time;
+
+        const hour = Number(match[1]);
+
+        return `${hour % 12 || 12}:${match[2]} ${
+          hour < 12 ? "AM" : "PM"
+        }`;
+      }
+
+      // GET BOOKING DATE
+      function getBookingDate(value) {
+        if (!value) return "";
+
+        return String(value).slice(0, 10);
+      }
+
+      // RENDER CALENDAR
+      function renderCalendar() {
+
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+
+        const monthName = currentDate.toLocaleString("en-US", {
+          month: "long",
+          year: "numeric"
+        });
+
+        calendarTitle.textContent = monthName;
+        monthHeading.textContent = monthName;
+
+        calendarGrid.replaceChildren();
+
+        // WEEKDAY HEADINGS
+        dayNames.forEach(function (day) {
+          const heading = document.createElement("div");
+
+          heading.className = "cal-head";
+          heading.textContent = day;
+
+          calendarGrid.appendChild(heading);
+        });
+
+        const firstDay = new Date(year, month, 1);
+        const startOffset = (firstDay.getDay() + 6) % 7;
+
+        const daysInMonth = new Date(
+          year,
+          month + 1,
+          0
+        ).getDate();
+
+        const totalCells = Math.ceil(
+          (startOffset + daysInMonth) / 7
+        ) * 7;
+
+        for (let i = 0; i < totalCells; i++) {
+
+          const dateNumber = i - startOffset + 1;
+
+          const cellDate = new Date(
+            year,
+            month,
+            dateNumber
+          );
+
+          const dayCell = document.createElement("div");
+          dayCell.className = "day";
+
+          const dayNumber = document.createElement("div");
+          dayNumber.className = "day-num";
+
+          dayNumber.textContent = cellDate.getDate();
+
+          // OTHER MONTHS
+          if (
+            cellDate.getMonth() !== month ||
+            cellDate.getFullYear() !== year
+          ) {
+            dayCell.classList.add("muted");
+          }
+
+          // HIGHLIGHT TODAY
+          const today = new Date();
+
+          if (
+            cellDate.getDate() === today.getDate() &&
+            cellDate.getMonth() === today.getMonth() &&
+            cellDate.getFullYear() === today.getFullYear()
+          ) {
+            dayNumber.style.fontWeight = "700";
+            dayNumber.style.textDecoration = "underline";
+          }
+
+          dayCell.appendChild(dayNumber);
+
+          // DATE KEY
+          const dateKey =
+            `${cellDate.getFullYear()}-` +
+            `${String(cellDate.getMonth() + 1).padStart(2, "0")}-` +
+            `${String(cellDate.getDate()).padStart(2, "0")}`;
+
+          // FIND BOOKINGS FOR THIS DATE
+          const dayBookings = bookings.filter(function (booking) {
+            return getBookingDate(booking.bookingDate) === dateKey;
+          });
+
+          // DISPLAY BOOKINGS
+          dayBookings.forEach(function (booking) {
+
+            const event = document.createElement("div");
+
+            const status = String(
+              booking.status || "pending"
+            ).toLowerCase();
+
+            event.className = "calendar-booking";
+
+            event.style.fontSize = "11px";
+            event.style.padding = "5px";
+            event.style.marginTop = "5px";
+            event.style.borderRadius = "5px";
+            event.style.overflowWrap = "anywhere";
+
+            // STATUS COLORS
+            if (status === "confirmed") {
+              event.style.backgroundColor = "#dcfce7";
+              event.style.color = "#166534";
+            } else if (status === "pending") {
+              event.style.backgroundColor = "#fef3c7";
+              event.style.color = "#92400e";
+            } else {
+              event.style.backgroundColor = "#e5e7eb";
+              event.style.color = "#374151";
+            }
+
+            const serviceName =
+              booking.service?.serviceName ||
+              "Photography Session";
+
+            const eventTitle = document.createElement("strong");
+            eventTitle.textContent = serviceName;
+
+            const eventDetails = document.createElement("div");
+
+            eventDetails.textContent =
+              `${formatTime(booking.startTime)} · ${status}`;
+
+            event.appendChild(eventTitle);
+            event.appendChild(eventDetails);
+
+            // HOVER DETAILS
+            event.title =
+              `${serviceName}\n` +
+              `Time: ${formatTime(booking.startTime)}\n` +
+              `Location: ${booking.location || "Not set"}\n` +
+              `Status: ${status}`;
+
+            dayCell.appendChild(event);
+          });
+
+          calendarGrid.appendChild(dayCell);
+        }
+      }
+
+      // PREVIOUS MONTH
+      document.getElementById("prevMonth")
+        .addEventListener("click", function () {
+
+          currentDate = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth() - 1,
+            1
+          );
+
+          renderCalendar();
+        });
+
+      // NEXT MONTH
+      document.getElementById("nextMonth")
+        .addEventListener("click", function () {
+
+          currentDate = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth() + 1,
+            1
+          );
+
+          renderCalendar();
+        });
+
+      // TODAY
+      document.getElementById("todayButton")
+        .addEventListener("click", function () {
+
+          currentDate = new Date();
+          renderCalendar();
+        });
+
+      // LOGOUT
+      const logoutButton = document.getElementById("logoutButton");
+
+      if (logoutButton) {
+        logoutButton.addEventListener("click", function (event) {
+
+          event.preventDefault();
+
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("user");
+
+          window.location.replace("login.html");
+        });
+      }
+
+      // SHOW CALENDAR
+      renderCalendar();
+
+      // CHECK LOGIN
+      if (!token) {
+        calendarMessage.textContent =
+          "Please log in to view your bookings.";
+        return;
+      }
+
+      // LOAD BOOKINGS FROM MONGODB
+      try {
+
+        const response = await fetch(
+          "http://localhost:5000/api/bookings",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to load bookings: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+
+        if (!Array.isArray(data)) {
+          throw new Error("Invalid bookings response");
+        }
+
+        bookings = data;
+
+        renderCalendar();
+
+        calendarMessage.textContent = bookings.length
+          ? "Your photography bookings are displayed on the calendar."
+          : "You have no bookings yet.";
+
+      } catch (error) {
+
+        console.error("Calendar booking error:", error);
+
+        calendarMessage.textContent =
+          "Unable to load bookings. Check your backend connection.";
+      }
+
+    });
+  </script>
+
+</body>
+</html>

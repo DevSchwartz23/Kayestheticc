@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Booking Calendar | Kayesthetic</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles-dashboard.css">
+
+  <style>
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    .cal-grid .day {
+      min-width: 0;
+      min-height: 105px;
+    }
+
+    .cal-grid .event {
+      display: block;
+      margin-top: 5px;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 11px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+      cursor: default;
+    }
+
+    .cal-grid .event.pending {
+      background: #fff1c7;
+      color: #855a00;
+    }
+
+    .cal-grid .event.confirmed {
+      background: #d9efdf;
+      color: #245b36;
+    }
+
+    .cal-grid .event.completed {
+      background: #e4eaf2;
+      color: #35465d;
+    }
+
+    .cal-grid .event.cancelled {
+      background: #f8dddd;
+      color: #8a3030;
+      text-decoration: line-through;
+    }
+
+    .cal-grid .event.rescheduled {
+      background: #dceafa;
+      color: #244b83;
+    }
+
+    .cal-grid .day.today {
+      outline: 2px solid #b99b59;
+      outline-offset: -2px;
+    }
+
+    .calendar-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 700px) {
+      .cal-grid .day {
+        min-height: 75px;
+        padding: 5px;
+      }
+
+      .cal-grid .event {
+        font-size: 9px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-top">
+
+        <a class="brand" href="index.html">
+          <span class="logo"></span>
+
+          <span>
+            <strong>KAYESTHETIC</strong>
+            <small>ADMIN WORKSPACE</small>
+          </span>
+        </a>
+
+      </div>
+
+      <!-- NAVIGATION -->
+      <nav class="nav">
+
+        <div class="nav-section">Management</div>
+
+        <a href="admin-dashboard.html">
+          <span class="nav-icon">⌂</span>
+          Dashboard
+        </a>
+
+        <a class="active" href="admin-calendar.html">
+          <span class="nav-icon">▦</span>
+          Booking Calendar
+        </a>
+
+        <a href="admin-bookings.html">
+          <span class="nav-icon">◫</span>
+          Bookings
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">♙</span>
+          Clients
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">▣</span>
+          Sessions
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">₱</span>
+          Payments
+        </a>
+
+        <div class="nav-section">Security</div>
+
+        <a href="audit-logs.html">
+          <span class="nav-icon">◌</span>
+          Audit Logs
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">⚙</span>
+          Settings
+        </a>
+
+        <a href="login.html" id="logoutButton">
+          <span class="nav-icon">↪</span>
+          Sign out
+        </a>
+
+      </nav>
+
+      <!-- ADMIN PROFILE -->
+      <div class="sidebar-bottom">
+
+        <div class="profile-mini">
+
+          <span class="avatar">AD</span>
+
+          <div>
+            <strong id="adminName">Admin</strong>
+            <small>Administrator account</small>
+          </div>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+      <header class="topbar">
+
+        <h1>Booking Calendar</h1>
+
+        <div class="topbar-right">
+          <span class="avatar">AD</span>
+        </div>
+
+      </header>
+
+      <main>
+
+        <div class="page-wrap">
+
+          <!-- PAGE HEADING -->
+          <div class="hero-row">
+
+            <div>
+              <p class="eyebrow">SMART SCHEDULING</p>
+
+              <h2 id="pageMonth">Booking Calendar</h2>
+
+              <p>
+                View customer bookings, session times,
+                and booking statuses.
+              </p>
+            </div>
+
+            <a class="gold-btn" href="admin-bookings.html">
+              Manage bookings →
+            </a>
+
+          </div>
+
+          <!-- CALENDAR -->
+          <section class="card panel">
+
+            <div class="calendar-toolbar">
+
+              <div class="calendar-title" id="calendarTitle">
+                Loading calendar...
+              </div>
+
+              <div class="calendar-actions">
+
+                <button class="outline-btn" id="prevMonth" type="button">
+                  ‹
+                </button>
+
+                <button class="outline-btn" id="todayButton" type="button">
+                  Today
+                </button>
+
+                <button class="outline-btn" id="nextMonth" type="button">
+                  ›
+                </button>
+
+              </div>
+
+            </div>
+
+            <p id="calendarMessage" aria-live="polite">
+              Loading customer bookings...
+            </p>
+
+            <div class="cal-grid" id="calendarGrid"></div>
+
+            <!-- LEGEND -->
+            <div class="calendar-legend">
+
+              <span>🟡 Pending</span>
+              <span>🟢 Confirmed</span>
+              <span>🔵 Completed</span>
+              <span>🔴 Cancelled</span>
+
+            </div>
+
+          </section>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script src="admin-calendar.js"></script>
+
+</body>
+</html>

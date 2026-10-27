@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Bookings | Kayesthetic</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles-dashboard.css">
+  <script src="dashboard-auth.js"></script>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <a class="brand" href="index.html">
+          <span class="logo"></span>
+          <span>
+            <strong>KAYESTHETIC</strong>
+            <small>CLIENT PORTAL</small>
+          </span>
+        </a>
+      </div>
+
+      <nav class="nav">
+        <div class="nav-section">Workspace</div>
+
+        <a href="user-dashboard.html">
+          <span class="nav-icon">⌂</span>
+          Dashboard
+        </a>
+
+        <a href="user-calendar.html">
+          <span class="nav-icon">▦</span>
+          My Calendar
+        </a>
+
+        <a href="booking.html">
+          <span class="nav-icon">＋</span>
+          Book a Session
+        </a>
+
+        <a class="active" href="my-bookings.html">
+          <span class="nav-icon">◫</span>
+          My Bookings
+        </a>
+
+        <div class="nav-section">Account</div>
+
+        <a href="login.html" id="logoutButton">
+          <span class="nav-icon">↪</span>
+          Sign out
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="profile-mini">
+          <span class="avatar">--</span>
+          <div>
+            <strong class="loggedInName">Loading...</strong>
+            <small>Client account</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+      <header class="topbar">
+        <h1>My Bookings</h1>
+        <div class="topbar-right">
+          <span class="avatar">--</span>
+        </div>
+      </header>
+
+      <main>
+        <div class="page-wrap">
+
+          <div class="hero-row">
+            <div>
+              <p class="eyebrow">YOUR PHOTOGRAPHY SESSIONS</p>
+              <h2>Manage your bookings.</h2>
+              <p>
+                View your sessions, check their status,
+                and manage pending requests.
+              </p>
+            </div>
+
+            <a href="booking.html" class="gold-btn">
+              ＋ Book a session
+            </a>
+          </div>
+
+          <!-- BOOKING SUMMARY -->
+          <div class="cards kpis">
+
+            <div class="card kpi">
+              <div class="kpi-top">Total bookings</div>
+              <div class="kpi-number" id="totalBookings">0</div>
+              <div class="kpi-note">All your sessions</div>
+            </div>
+
+            <div class="card kpi">
+              <div class="kpi-top">Pending</div>
+              <div class="kpi-number" id="pendingBookings">0</div>
+              <div class="kpi-note">Waiting for approval</div>
+            </div>
+
+            <div class="card kpi">
+              <div class="kpi-top">Confirmed</div>
+              <div class="kpi-number" id="confirmedBookings">0</div>
+              <div class="kpi-note">Approved sessions</div>
+            </div>
+
+            <div class="card kpi">
+              <div class="kpi-top">Completed</div>
+              <div class="kpi-number" id="completedBookings">0</div>
+              <div class="kpi-note">Finished sessions</div>
+            </div>
+
+          </div>
+
+          <!-- BOOKINGS LIST -->
+          <section class="card panel" style="margin-top:18px">
+
+            <div class="panel-head">
+              <h3>Booking history</h3>
+            </div>
+
+            <p id="bookingsMessage">
+              Loading your bookings...
+            </p>
+
+            <div id="bookingsList"></div>
+
+          </section>
+
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- RESCHEDULE DIALOG -->
+  <dialog id="rescheduleDialog" style="border:1px solid #ddd;border-radius:12px;padding:24px;max-width:400px;width:90%;">
+    <form id="rescheduleForm">
+      <h3>Reschedule Booking</h3>
+
+      <p>Choose your new preferred date and time.</p>
+
+      <label for="newBookingDate">New date</label>
+      <input
+        id="newBookingDate"
+        type="date"
+        class="search"
+        required
+        style="display:block;width:100%;margin:8px 0 16px"
+      >
+
+      <label for="newBookingTime">New time</label>
+      <select
+        id="newBookingTime"
+        class="filter"
+        required
+        style="display:block;width:100%;margin:8px 0 16px"
+      >
+        <option value="14:00">2:00 PM</option>
+        <option value="16:00">4:00 PM</option>
+      </select>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button type="button" class="outline-btn" id="closeDialog">
+          Cancel
+        </button>
+        <button type="submit" class="gold-btn" id="saveReschedule">
+          Save changes
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="user-profile.js"></script>
+  <script src="my-bookings.js"></script>
+</body>
+</html>

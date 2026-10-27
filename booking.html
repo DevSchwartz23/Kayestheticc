@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Book a Session | Kayesthetic</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="styles-dashboard.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-top">
+        <a class="brand" href="index.html">
+          <span class="logo"></span>
+
+          <span>
+            <strong>KAYESTHETIC</strong>
+            <small>CLIENT PORTAL</small>
+          </span>
+        </a>
+      </div>
+
+      <!-- NAVIGATION -->
+      <nav class="nav">
+
+        <div class="nav-section">Workspace</div>
+
+        <a href="user-dashboard.html">
+          <span class="nav-icon">⌂</span>
+          Dashboard
+        </a>
+
+        <a href="user-calendar.html">
+          <span class="nav-icon">▦</span>
+          My Calendar
+        </a>
+
+        <a class="active" href="booking.html">
+          <span class="nav-icon">＋</span>
+          Book a Session
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">◫</span>
+          My Bookings
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">✎</span>
+          Questionnaire
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">₱</span>
+          Payments
+        </a>
+
+        <a href="#">
+          <span class="nav-icon">♡</span>
+          Messages
+        </a>
+
+        <div class="nav-section">Account</div>
+
+        <a href="index.html">
+          <span class="nav-icon">↪</span>
+          Sign out
+        </a>
+
+      </nav>
+
+      <!-- USER PROFILE -->
+      <div class="sidebar-bottom">
+
+        <div class="profile-mini">
+
+          <span class="avatar">LP</span>
+
+          <div>
+            <strong class="loggedInName">Loading...</strong>
+            <small>Client account</small>
+          </div>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+      <!-- TOP BAR -->
+      <header class="topbar">
+
+        <h1>Book a Session</h1>
+
+        <div class="topbar-right">
+
+          <button class="icon-btn">
+            ♧
+            <span class="dot"></span>
+          </button>
+
+          <span class="avatar">--</span>
+
+        </div>
+
+      </header>
+
+      <main>
+
+        <div class="page-wrap">
+
+          <!-- PAGE HEADING -->
+          <div class="hero-row">
+
+            <div>
+              <p class="eyebrow">CHOOSE YOUR EXPERIENCE</p>
+              <h2>Find the right session.</h2>
+              <p>Pick a service, then choose an available date and time.</p>
+            </div>
+
+          </div>
+
+          <!-- STEP 1: PHOTOGRAPHY PACKAGE -->
+          <div class="card panel" style="margin-bottom:18px">
+
+            <div class="panel-head">
+              <h3>1 · Choose a photography session</h3>
+            </div>
+
+            <div class="cards grid-2-eq">
+
+              <!-- PORTRAIT SESSION -->
+              <div class="card panel" style="box-shadow:none">
+
+                <p class="eyebrow">PORTRAITS</p>
+
+                <h3 style="font-family:var(--serif);font-size:26px;margin:0 0 7px">
+                  Portrait Session
+                </h3>
+
+                <p style="font-size:12px;color:var(--muted)">
+                  2 hours · Studio or outdoor · 20 edited images
+                </p>
+
+                <strong style="font-size:18px">₱3,500</strong>
+
+                <button class="gold-btn" id="selectPortrait" type="button">
+                  Select session
+                </button>
+
+              </div>
+
+              <!-- EVENT PHOTOGRAPHY -->
+              <div class="card panel" style="box-shadow:none">
+
+                <p class="eyebrow">EVENTS</p>
+
+                <h3 style="font-family:var(--serif);font-size:26px;margin:0 0 7px">
+                  Event Photography
+                </h3>
+
+                <p style="font-size:12px;color:var(--muted)">
+                  4 hours · Event coverage · Edited gallery
+                </p>
+
+                <strong style="font-size:18px">₱7,500</strong>
+
+                <button class="outline-btn" id="selectEvent" type="button">
+                  Select session
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- STEP 2 AND STEP 3 -->
+          <div class="cards grid-2-eq">
+
+            <!-- DATE AND TIME -->
+            <section class="card panel">
+
+              <div class="panel-head">
+
+                <h3>2 · Choose date &amp; time</h3>
+
+                <span class="status confirmed">
+                  Live availability
+                </span>
+
+              </div>
+
+              <div class="search-row">
+
+                <input
+                  type="date"
+                 class="search"
+                id="bookingDate"
+                aria-label="Booking date"
+                >
+
+                <select class="filter" id="bookingTime">
+                    <option value="14:00">2:00 PM</option>
+                    <option value="16:00">4:00 PM</option>
+                </select>
+
+              </div>
+
+              <div
+                class="notice"
+                style="background:var(--green-soft);color:#41664f"
+              >
+                ✓ Selected slot is available.
+                A 30-minute setup buffer will be reserved automatically.
+              </div>
+
+            </section>
+
+            <!-- SESSION DETAILS -->
+            <section class="card panel">
+
+              <div class="panel-head">
+                <h3>3 · Session details</h3>
+              </div>
+
+              <div style="display:grid;gap:12px">
+
+                <label style="font-size:12px;font-weight:700">
+                  Location
+
+                  <input
+                    class="search"
+                    style="margin-top:6px"
+                    id="bookingLocation"
+                    placeholder="Where will the session take place?"
+                  >
+                </label>
+
+                <label style="font-size:12px;font-weight:700">
+                  Theme
+
+                  <input
+                    class="search"
+                    style="margin-top:6px"
+                    id="bookingTheme"
+                    placeholder="e.g. editorial, casual, birthday"
+                  >
+                </label>
+
+                <label style="font-size:12px;font-weight:700">
+                  Special requests
+
+                  <input
+                    class="search"
+                    style="margin-top:6px"
+                    id="bookingRequests"
+                    placeholder="Anything your photographer should know?"
+                  >
+                </label>
+
+              </div>
+
+            </section>
+
+          </div>
+
+          <!-- REVIEW BOOKING -->
+          <div class="card panel" style="margin-top:18px">
+
+            <div class="panel-head">
+              <h3>Review booking</h3>
+            </div>
+
+            <div class="pay-row">
+              <span id="reviewService">Portrait Session</span>
+              <strong id="reviewPrice">₱3,500</strong>
+            </div>
+
+            <div class="pay-row">
+              <span>Sept. 20 · 2:00 PM – 4:00 PM</span>
+              <span>Available ✓</span>
+            </div>
+
+            <div class="pay-row">
+              <span>Down payment</span>
+              <strong>₱1,000</strong>
+            </div>
+
+            <div
+              style="display:flex;justify-content:flex-end;margin-top:15px"
+            >
+
+              <button class="gold-btn" id="confirmBooking">
+                Confirm booking <span>→</span>
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT -->
+    <script src="booking.js"></script>
+    <script src="user-profile.js"></script>
+
+</body>
+</html>
